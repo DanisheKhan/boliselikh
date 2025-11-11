@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     // Initialize Speech Recognition API
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-    
+
     if (!SpeechRecognition) {
       setIsSupported(false)
       setError('Speech Recognition API is not supported in your browser')
