@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import '../App.css'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
+import Navbar from '../components/Navbar'
 import Header from '../components/Header'
 import LanguageSelector from '../components/LanguageSelector'
 import FontSizeSelector from '../components/FontSizeSelector'
@@ -74,9 +75,12 @@ function Boliselikh() {
         />
       </div>
 
+      {/* Navbar */}
+      <Navbar />
+
       {/* Content Overlay */}
       <div style={{ position: 'relative', zIndex: 10, width: '100%' }}>
-        <div className="max-w-5xl mx-auto px-4 py-6 md:py-8">
+        <div className="max-w-5xl mx-auto px-4 py-6 md:py-8 mt-24">
           {/* Header */}
           <Header />
 
@@ -148,13 +152,11 @@ function Boliselikh() {
               />
             </div>
           </div>
-
-          {/* Footer */}
-          <div className="mt-12">
-            <Footer />
-          </div>
         </div>
       </div>
+
+      {/* Footer - Full Width */}
+      <Footer />
     </div>
   )
 }
