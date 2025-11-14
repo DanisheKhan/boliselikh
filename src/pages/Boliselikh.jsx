@@ -119,7 +119,7 @@ function Boliselikh() {
               {error && <ErrorMessage error={error} />}
 
               {/* Stats Bar - Glass Inner */}
-              <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl p-4">
+              <div >
                 <StatsBar
                   wordCount={wordCount}
                   charCount={charCount}
