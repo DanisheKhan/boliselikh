@@ -33,28 +33,28 @@ function UtilityButtons({ transcript, wordCount, charCount, language, speakingTi
         <button
           onClick={handleCopy}
           disabled={!transcript}
-          className="bg-white text-black disabled:bg-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
+          className="bg-transparent border-2 border-white text-white font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed"
         >
           Copy
         </button>
         <button
           onClick={handleDownloadText}
           disabled={!transcript}
-          className="bg-white/10 border-2 border-white text-white disabled:bg-white/5 disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
+          className="bg-transparent border-2 border-white text-white font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed"
         >
           TXT
         </button>
         <button
           onClick={handleDownloadJSON}
           disabled={!transcript}
-          className="bg-white text-black disabled:bg-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
+          className="bg-transparent border-2 border-white text-white font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed"
         >
           JSON
         </button>
         <button
           onClick={onClear}
           disabled={!transcript}
-          className="bg-white/10 border-2 border-white text-white disabled:bg-white/5 disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
+          className="bg-transparent border-2 border-white text-white font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed"
         >
           Clear
         </button>

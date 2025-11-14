@@ -56,12 +56,12 @@ function Home() {
             <div className="flex gap-4 justify-center flex-wrap">
               <button
                 onClick={handleNavigateToBoliselikh}
-                className="bg-white text-black font-bold py-4 px-10 rounded-full transition-all duration-300 shadow-lg"
+                className="bg-white text-black font-bold py-4 px-10 rounded-full transition-all duration-200"
               >
                 Get Started
               </button>
               <button
-                className="bg-transparent text-white font-bold py-4 px-10 rounded-full border-2 border-white transition-all duration-300 backdrop-blur-sm"
+                className="bg-transparent border-2 border-white text-white font-bold py-4 px-10 rounded-full transition-all duration-200"
               >
                 Learn More
               </button>

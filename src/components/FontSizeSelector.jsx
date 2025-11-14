@@ -11,9 +11,9 @@ function FontSizeSelector({ fontSize, onFontSizeChange }) {
           <button
             key={size}
             onClick={() => onFontSizeChange(size)}
-            className={`flex-1 px-3 py-2 rounded-lg font-semibold transition-all ${fontSize === size
-              ? 'backdrop-blur-md bg-white/20 border border-white/40 text-white'
-              : 'backdrop-blur-md bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white'
+            className={`flex-1 px-3 py-2 rounded-full font-semibold transition-all ${fontSize === size
+              ? 'bg-white text-black'
+              : 'bg-transparent border-2 border-white text-white'
               }`}
           >
             {FONT_SIZE_LABELS[size]}

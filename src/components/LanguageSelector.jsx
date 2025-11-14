@@ -10,7 +10,7 @@ function LanguageSelector({ language, onLanguageChange, isListening }) {
         value={language}
         onChange={(e) => onLanguageChange(e.target.value)}
         disabled={isListening}
-        className="w-full px-4 py-3 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+        className="w-full px-4 py-3 bg-transparent border-2 border-white rounded-full focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
       >
         {LANGUAGES.map((lang) => (
           <option key={lang.code} value={lang.code}>
