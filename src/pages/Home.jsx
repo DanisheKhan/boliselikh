@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import DarkVeil from '../components/DarkVeil'
+import Navbar from '../components/Navbar'
 
 function Home() {
   const navigate = useNavigate()
@@ -21,6 +22,9 @@ function Home() {
           warpAmount={0.3}
         />
       </div>
+
+      {/* Navbar */}
+      <Navbar />
 
       {/* Content Overlay */}
       <div
