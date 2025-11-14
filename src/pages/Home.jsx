@@ -43,7 +43,7 @@ function Home() {
           <div className="px-4">
             {/* Logo */}
             <div className="mb-8 flex justify-center">
-              <img src="/Logoo.png" alt="Boliselikh Logo" style={{ height: '120px', width: 'auto', filter: 'drop-shadow(0 0 20px rgba(177, 158, 239, 0.5))' }} />
+              <img src="/Logoo.png" alt="Boliselikh Logo" style={{ height: '120px', width: 'auto' }} />
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
