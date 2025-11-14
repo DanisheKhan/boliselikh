@@ -317,20 +317,12 @@ function App() {
             )}
 
             {/* Control Buttons */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="mb-6">
               <button
-                onClick={startListening}
-                disabled={isListening}
-                className="bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400 text-white font-bold py-4 px-6 rounded-lg transition-all duration-200 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg shadow-md hover:shadow-lg transform hover:scale-105"
+                onClick={isListening ? stopListening : startListening}
+                className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 text-lg shadow-md hover:shadow-lg transform hover:scale-105"
               >
-                <span>▶️</span> Start
-              </button>
-              <button
-                onClick={stopListening}
-                disabled={!isListening}
-                className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-400 text-white font-bold py-4 px-6 rounded-lg transition-all duration-200 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg shadow-md hover:shadow-lg transform hover:scale-105"
-              >
-                <span>⏹️</span> Stop
+                <span>{isListening ? '⏸️' : '▶️'}</span> {isListening ? 'Pause' : 'Play'}
               </button>
             </div>
 
