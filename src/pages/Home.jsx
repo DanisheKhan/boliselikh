@@ -116,7 +116,7 @@ function Home() {
               <div>
                 <h3 className="text-white font-semibold mb-4">Company</h3>
                 <ul className="space-y-2">
-                  <li><a href="#about" className="text-gray-400 text-sm transition-colors">About</a></li>
+                  <li><a href="/about" className="text-gray-400 text-sm transition-colors hover:text-white">About</a></li>
                   <li><a href="#blog" className="text-gray-400 text-sm transition-colors">Blog</a></li>
                   <li><a href="#careers" className="text-gray-400 text-sm transition-colors">Careers</a></li>
                   <li><a href="#press" className="text-gray-400 text-sm transition-colors">Press</a></li>

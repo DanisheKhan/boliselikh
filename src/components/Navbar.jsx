@@ -13,6 +13,7 @@ function Navbar() {
         {/* Nav Links */}
         <div className="flex items-center gap-12">
           <Link to="/" className="text-white transition-colors text-base font-medium">Home</Link>
+          <Link to="/about" className="text-white transition-colors text-base font-medium">About</Link>
           <a href="#docs" className="text-white transition-colors text-base font-medium">Docs</a>
         </div>
       </div>
