@@ -87,7 +87,7 @@ function Boliselikh() {
           {/* Main Content Container */}
           <div className="mt-8 space-y-6">
             {/* Settings Panel - Glass */}
-            <div className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-6 shadow-2xl hover:bg-white/10 transition-all duration-300">
+            <div className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-6 shadow-2xl transition-all duration-300">
               <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
                 <div className="flex-1">
                   <LanguageSelector
@@ -106,26 +106,20 @@ function Boliselikh() {
             </div>
 
             {/* Main Editor Panel - Glass */}
-            <div className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-8 shadow-2xl">
+            <div className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-8 shadow-2xl space-y-6">
               {/* Transcript Display */}
-              <div className="mb-8">
-                <TranscriptDisplay
-                  transcript={transcript}
-                  interimTranscript={interimTranscript}
-                  isListening={isListening}
-                  fontSize={fontSize}
-                />
-              </div>
+              <TranscriptDisplay
+                transcript={transcript}
+                interimTranscript={interimTranscript}
+                isListening={isListening}
+                fontSize={fontSize}
+              />
 
               {/* Error Message */}
-              {error && (
-                <div className="mb-6">
-                  <ErrorMessage error={error} />
-                </div>
-              )}
+              {error && <ErrorMessage error={error} />}
 
               {/* Stats Bar - Glass Inner */}
-              <div className="mb-8 backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl p-4">
+              <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl p-4">
                 <StatsBar
                   wordCount={wordCount}
                   charCount={charCount}
@@ -134,12 +128,10 @@ function Boliselikh() {
               </div>
 
               {/* Play/Pause Button */}
-              <div className="mb-6">
-                <PlayPauseButton
-                  isListening={isListening}
-                  onToggle={handlePlayPauseToggle}
-                />
-              </div>
+              <PlayPauseButton
+                isListening={isListening}
+                onToggle={handlePlayPauseToggle}
+              />
 
               {/* Utility Buttons */}
               <UtilityButtons

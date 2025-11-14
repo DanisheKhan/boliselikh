@@ -25,36 +25,36 @@ function UtilityButtons({ transcript, wordCount, charCount, language, speakingTi
   return (
     <>
       {isCopied && (
-        <div className="mb-6 backdrop-blur-lg bg-green-500/20 border border-green-400/50 text-green-100 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300">
-          ✅ Copied to clipboard!
+        <div className="backdrop-blur-lg bg-green-500/20 border border-green-400/50 text-green-100 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300">
+          Copied to clipboard!
         </div>
       )}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <button
           onClick={handleCopy}
           disabled={!transcript}
-          className="bg-white text-black hover:bg-gray-100 disabled:bg-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
+          className="bg-white text-black disabled:bg-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
         >
           Copy
         </button>
         <button
           onClick={handleDownloadText}
           disabled={!transcript}
-          className="bg-white/10 border-2 border-white text-white hover:bg-white/20 disabled:bg-white/5 disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
+          className="bg-white/10 border-2 border-white text-white disabled:bg-white/5 disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
         >
           TXT
         </button>
         <button
           onClick={handleDownloadJSON}
           disabled={!transcript}
-          className="bg-white text-black hover:bg-gray-100 disabled:bg-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
+          className="bg-white text-black disabled:bg-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
         >
           JSON
         </button>
         <button
           onClick={onClear}
           disabled={!transcript}
-          className="bg-white/10 border-2 border-white text-white hover:bg-white/20 disabled:bg-white/5 disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
+          className="bg-white/10 border-2 border-white text-white disabled:bg-white/5 disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
         >
           Clear
         </button>

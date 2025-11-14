@@ -1,6 +1,6 @@
 function TranscriptDisplay({ transcript, interimTranscript, isListening, fontSize }) {
   return (
-    <div className="mb-6">
+    <div>
       <div className="flex justify-between items-center mb-4">
         <label className="block text-sm font-semibold text-white/80">
           Transcript
