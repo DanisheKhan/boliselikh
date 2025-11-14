@@ -87,7 +87,7 @@ function Boliselikh() {
           {/* Main Content Container */}
           <div className="mt-8 space-y-6">
             {/* Settings Panel - Glass */}
-            <div className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-6 shadow-2xl transition-all duration-300">
+            <div className="backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-2xl transition-all duration-300">
               <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
                 <div className="flex-1">
                   <LanguageSelector
@@ -106,7 +106,7 @@ function Boliselikh() {
             </div>
 
             {/* Main Editor Panel - Glass */}
-            <div className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-8 shadow-2xl space-y-6">
+            <div className="backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl space-y-6">
               {/* Transcript Display */}
               <TranscriptDisplay
                 transcript={transcript}

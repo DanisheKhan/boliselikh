@@ -47,7 +47,7 @@ function Home() {
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
-              Voice to Text
+              BoliseLikh
             </h1>
             <p className="text-lg md:text-2xl mb-12 text-gray-300 max-w-2xl mx-auto leading-relaxed">
               Become emboldened by the flame of ambition
