@@ -1,5 +1,13 @@
 /* App styles - Minimalist Black and White Theme */
 
+/* Prevent overflow on html and body */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 /* Custom scrollbar styling for textarea */
 textarea::-webkit-scrollbar {
   width: 8px;

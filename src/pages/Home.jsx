@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import DarkVeil from '../components/DarkVeil'
+import StaggeredMenu from '../components/StaggeredMenu'
 
 function Home() {
   const navigate = useNavigate()
@@ -8,8 +9,22 @@ function Home() {
     navigate('/boliselikh')
   }
 
+  const menuItems = [
+    { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
+    { label: 'App', ariaLabel: 'Go to voice to text app', link: '/boliselikh' },
+    { label: 'About', ariaLabel: 'Learn about us', link: '#about' },
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '#contact' }
+  ]
+
+  const socialItems = [
+    { label: 'Twitter', link: 'https://twitter.com' },
+    { label: 'GitHub', link: 'https://github.com' },
+    { label: 'LinkedIn', link: 'https://linkedin.com' }
+  ]
+
   return (
-    <div style={{ width: '100%', minHeight: '100vh', position: 'relative' }}>
+    <div style={{ width: '100%', height: '100vh', position: 'relative', overflow: 'hidden' }}>
+      {/* DarkVeil Background */}
       <div style={{ width: '100%', height: '100vh', position: 'absolute', top: 0, left: 0 }}>
         <DarkVeil
           hueShift={0}
@@ -18,6 +33,25 @@ function Home() {
           speed={0.5}
           scanlineFrequency={2}
           warpAmount={0.3}
+        />
+      </div>
+
+      {/* StaggeredMenu */}
+      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, width: '100%', height: '100vh', zIndex: 50, overflow: 'hidden' }}>
+        <StaggeredMenu
+          position="right"
+          items={menuItems}
+          socialItems={socialItems}
+          displaySocials={true}
+          displayItemNumbering={true}
+          menuButtonColor="#000"
+          openMenuButtonColor="#fff"
+          changeMenuColorOnOpen={false}
+          colors={['#B19EEF', '#5227FF']}
+          logoUrl="/src/assets/logos/reactbits-gh-white.svg"
+          accentColor="#ff6b6b"
+          onMenuOpen={() => console.log('Menu opened')}
+          onMenuClose={() => console.log('Menu closed')}
         />
       </div>
 
