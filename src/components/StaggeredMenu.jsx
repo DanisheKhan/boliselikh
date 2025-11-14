@@ -9,9 +9,9 @@ export const StaggeredMenu = ({
   displaySocials = true,
   displayItemNumbering = true,
   className,
-  logoUrl = '/src/assets/logos/reactbits-gh-white.svg',
+  logoUrl = 'Logoo.png',
   menuButtonColor = '#fff',
-  openMenuButtonColor = '#fff',
+  openMenuButtonColor = '#000',
   changeMenuColorOnOpen = true,
   isFixed = false,
   accentColor = '#5227FF',
@@ -350,7 +350,7 @@ export const StaggeredMenu = ({
             className="sm-logo flex items-center select-none pointer-events-auto"
             aria-label="Logo">
             <img
-              src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
+              src={ '/Logoo.png'}
               alt="Logo"
               className="sm-logo-img block h-8 w-auto object-contain"
               draggable={false}
