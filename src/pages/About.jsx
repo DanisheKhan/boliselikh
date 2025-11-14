@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 import DarkVeil from '../components/DarkVeil'
 
 function About() {
@@ -188,20 +189,7 @@ function About() {
         </div>
 
         {/* Footer */}
-        <footer className="bg-black/40 backdrop-blur-lg border-t border-white/10 py-12 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-              <p className="text-gray-400 text-sm">© {new Date().getFullYear()} BoliseLikh. All rights reserved.</p>
-              <div className="flex items-center gap-6">
-                <a href="#status" className="text-gray-400 text-sm transition-colors hover:text-white">Status</a>
-                <span className="text-gray-600">•</span>
-                <a href="#contact" className="text-gray-400 text-sm transition-colors hover:text-white">Contact</a>
-                <span className="text-gray-600">•</span>
-                <a href="#feedback" className="text-gray-400 text-sm transition-colors hover:text-white">Feedback</a>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   )
