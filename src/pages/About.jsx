@@ -25,7 +25,7 @@ function About() {
       {/* Content Overlay */}
       <div style={{ position: 'relative', zIndex: 10, width: '100%', color: 'white' }}>
         {/* Hero Section */}
-        <div className="min-h-screen flex items-center justify-center px-4 py-20">
+        <div className="min-h-screen flex items-center justify-center px-4 py-20 mt-32">
           <div className="max-w-4xl w-full">
             <div className="text-center mb-16">
               <h1 className="text-6xl md:text-7xl font-bold mb-6">About BoliseLikh</h1>
