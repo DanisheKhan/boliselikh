@@ -29,34 +29,34 @@ function UtilityButtons({ transcript, wordCount, charCount, language, speakingTi
           ✅ Copied to clipboard!
         </div>
       )}
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <button
           onClick={handleCopy}
           disabled={!transcript}
-          className="backdrop-blur-lg bg-blue-500/20 hover:bg-blue-500/30 disabled:bg-white/5 border border-blue-400/50 disabled:border-white/10 text-blue-100 disabled:text-white/40 font-semibold py-3 px-2 rounded-xl transition-all duration-200 disabled:cursor-not-allowed text-sm flex items-center justify-center gap-1"
+          className="bg-white text-black hover:bg-gray-100 disabled:bg-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
         >
-          📋 Copy
+          Copy
         </button>
         <button
           onClick={handleDownloadText}
           disabled={!transcript}
-          className="backdrop-blur-lg bg-purple-500/20 hover:bg-purple-500/30 disabled:bg-white/5 border border-purple-400/50 disabled:border-white/10 text-purple-100 disabled:text-white/40 font-semibold py-3 px-2 rounded-xl transition-all duration-200 disabled:cursor-not-allowed text-sm flex items-center justify-center gap-1"
+          className="bg-white/10 border-2 border-white text-white hover:bg-white/20 disabled:bg-white/5 disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
         >
-          📄 TXT
+          TXT
         </button>
         <button
           onClick={handleDownloadJSON}
           disabled={!transcript}
-          className="backdrop-blur-lg bg-indigo-500/20 hover:bg-indigo-500/30 disabled:bg-white/5 border border-indigo-400/50 disabled:border-white/10 text-indigo-100 disabled:text-white/40 font-semibold py-3 px-2 rounded-xl transition-all duration-200 disabled:cursor-not-allowed text-sm flex items-center justify-center gap-1"
+          className="bg-white text-black hover:bg-gray-100 disabled:bg-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
         >
-          📋 JSON
+          JSON
         </button>
         <button
           onClick={onClear}
           disabled={!transcript}
-          className="backdrop-blur-lg bg-orange-500/20 hover:bg-orange-500/30 disabled:bg-white/5 border border-orange-400/50 disabled:border-white/10 text-orange-100 disabled:text-white/40 font-semibold py-3 px-2 rounded-xl transition-all duration-200 disabled:cursor-not-allowed text-sm flex items-center justify-center gap-1"
+          className="bg-white/10 border-2 border-white text-white hover:bg-white/20 disabled:bg-white/5 disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center gap-1"
         >
-          🗑️ Clear
+          Clear
         </button>
       </div>
     </>
