@@ -11,6 +11,7 @@ import UtilityButtons from '../components/UtilityButtons'
 import ErrorMessage from '../components/ErrorMessage'
 import Footer from '../components/Footer'
 import NotSupported from '../components/NotSupported'
+import DarkVeil from '../components/DarkVeil'
 import { getWordCount, getCharCount } from '../utils/formatters'
 
 function Boliselikh() {
@@ -60,66 +61,99 @@ function Boliselikh() {
   }
 
   return (
-    <div className="min-h-screen bg-white p-4 transition-colors duration-300">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <Header />
+    <div style={{ width: '100%', minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
+      {/* DarkVeil Background - Fixed */}
+      <div style={{ width: '100%', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0 }}>
+        <DarkVeil
+          hueShift={0}
+          noiseIntensity={0.05}
+          scanlineIntensity={0.1}
+          speed={0.5}
+          scanlineFrequency={2}
+          warpAmount={0.3}
+        />
+      </div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Panel - Main Editor */}
-          <div className="lg:col-span-3 bg-white border border-gray-200 rounded-lg shadow-md p-6 md:p-8">
-            {/* Language & Settings Row */}
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
-              <LanguageSelector
-                language={language}
-                onLanguageChange={handleLanguageChange}
-                isListening={isListening}
-              />
-              <FontSizeSelector
-                fontSize={fontSize}
-                onFontSizeChange={changeFontSize}
-              />
+      {/* Content Overlay */}
+      <div style={{ position: 'relative', zIndex: 10, width: '100%' }}>
+        <div className="max-w-5xl mx-auto px-4 py-6 md:py-8">
+          {/* Header */}
+          <Header />
+
+          {/* Main Content Container */}
+          <div className="mt-8 space-y-6">
+            {/* Settings Panel - Glass */}
+            <div className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-6 shadow-2xl hover:bg-white/10 transition-all duration-300">
+              <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+                <div className="flex-1">
+                  <LanguageSelector
+                    language={language}
+                    onLanguageChange={handleLanguageChange}
+                    isListening={isListening}
+                  />
+                </div>
+                <div className="flex-1 md:flex-none">
+                  <FontSizeSelector
+                    fontSize={fontSize}
+                    onFontSizeChange={changeFontSize}
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Transcript Display */}
-            <TranscriptDisplay
-              transcript={transcript}
-              interimTranscript={interimTranscript}
-              isListening={isListening}
-              fontSize={fontSize}
-            />
+            {/* Main Editor Panel - Glass */}
+            <div className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-8 shadow-2xl">
+              {/* Transcript Display */}
+              <div className="mb-8">
+                <TranscriptDisplay
+                  transcript={transcript}
+                  interimTranscript={interimTranscript}
+                  isListening={isListening}
+                  fontSize={fontSize}
+                />
+              </div>
 
-            {/* Stats Bar */}
-            <StatsBar
-              wordCount={wordCount}
-              charCount={charCount}
-              speakingTime={speakingTime}
-            />
+              {/* Error Message */}
+              {error && (
+                <div className="mb-6">
+                  <ErrorMessage error={error} />
+                </div>
+              )}
 
-            {/* Error Message */}
-            <ErrorMessage error={error} />
+              {/* Stats Bar - Glass Inner */}
+              <div className="mb-8 backdrop-blur-lg bg-white/5 border border-white/10 rounded-xl p-4">
+                <StatsBar
+                  wordCount={wordCount}
+                  charCount={charCount}
+                  speakingTime={speakingTime}
+                />
+              </div>
 
-            {/* Play/Pause Button */}
-            <PlayPauseButton
-              isListening={isListening}
-              onToggle={handlePlayPauseToggle}
-            />
+              {/* Play/Pause Button */}
+              <div className="mb-6">
+                <PlayPauseButton
+                  isListening={isListening}
+                  onToggle={handlePlayPauseToggle}
+                />
+              </div>
 
-            {/* Utility Buttons */}
-            <UtilityButtons
-              transcript={transcript}
-              wordCount={wordCount}
-              charCount={charCount}
-              language={language}
-              speakingTime={speakingTime}
-              onClear={handleClear}
-            />
+              {/* Utility Buttons */}
+              <UtilityButtons
+                transcript={transcript}
+                wordCount={wordCount}
+                charCount={charCount}
+                language={language}
+                speakingTime={speakingTime}
+                onClear={handleClear}
+              />
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="mt-12">
+            <Footer />
           </div>
         </div>
-
-        {/* Footer */}
-        <Footer />
       </div>
     </div>
   )

@@ -1,13 +1,13 @@
 function TranscriptDisplay({ transcript, interimTranscript, isListening, fontSize }) {
   return (
     <div className="mb-6">
-      <div className="flex justify-between items-center mb-2">
-        <label className="block text-sm font-semibold text-gray-900">
+      <div className="flex justify-between items-center mb-4">
+        <label className="block text-sm font-semibold text-white/80">
           Transcript
         </label>
         {isListening && (
-          <div className="flex items-center gap-2 bg-gray-900 text-white px-3 py-1 rounded-full text-xs font-semibold">
-            <span className="inline-block w-2 h-2 bg-white rounded-full animate-pulse"></span>
+          <div className="flex items-center gap-2 backdrop-blur-lg bg-white/10 border border-white/20 text-white px-3 py-1 rounded-full text-xs font-semibold">
+            <span className="inline-block w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
             Recording...
           </div>
         )}
@@ -16,7 +16,7 @@ function TranscriptDisplay({ transcript, interimTranscript, isListening, fontSiz
         <textarea
           value={transcript + interimTranscript}
           readOnly
-          className={`w-full h-64 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-gray-50 text-gray-900 font-${fontSize} resize-none`}
+          className={`w-full h-64 px-4 py-3 backdrop-blur-md bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent text-white placeholder-white/40 font-${fontSize} resize-none transition-all duration-200`}
           placeholder="Your transcribed text will appear here..."
         />
       </div>
