@@ -72,22 +72,27 @@ function Home() {
         {/* Main Hero Section - Full Height */}
         <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div className="px-4">
-            <h1 className="text-5xl md:text-6xl font-bold mb-4">
-              🎤 Voice to Text
+            {/* Logo */}
+            <div className="mb-8 flex justify-center">
+              <img src="/Logoo.png" alt="Boliselikh Logo" style={{ height: '120px', width: 'auto', filter: 'drop-shadow(0 0 20px rgba(177, 158, 239, 0.5))' }} />
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
+              Voice to Text
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-gray-300">
+            <p className="text-lg md:text-2xl mb-12 text-gray-300 max-w-2xl mx-auto leading-relaxed">
               Become emboldened by the flame of ambition
             </p>
 
             <div className="flex gap-4 justify-center flex-wrap">
               <button
                 onClick={handleNavigateToBoliselikh}
-                className="bg-white hover:bg-gray-100 text-black font-bold py-3 px-8 rounded-full transition-all duration-200 hover:scale-105 shadow-lg"
+                className="bg-white hover:bg-gray-100 text-black font-bold py-4 px-10 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 Get Started
               </button>
               <button
-                className="bg-transparent hover:bg-gray-800/50 text-white font-bold py-3 px-8 rounded-full border border-gray-600 transition-all duration-200 hover:scale-105"
+                className="bg-transparent hover:bg-white/10 text-white font-bold py-4 px-10 rounded-full border-2 border-white transition-all duration-300 hover:scale-105 backdrop-blur-sm"
               >
                 Learn More
               </button>
