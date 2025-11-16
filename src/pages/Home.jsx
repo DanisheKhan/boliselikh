@@ -4,11 +4,11 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 const members = [
-  { id: 1, name: 'Member One', role: 'Core Team', image: '/members/1.jpg' },
-  { id: 2, name: 'Member Two', role: 'Operations', image: '/members/2.jpg' },
-  { id: 3, name: 'Member Three', role: 'Research', image: '/members/3.jpg' },
-  { id: 4, name: 'Member Four', role: 'Strategy', image: '/members/4.jpg' },
-  { id: 5, name: 'Member Five', role: 'Design', image: '/members/5.jpg' }
+  { id: 2, name: 'Rohit Darve', role: 'Operations', image: '/members/2.jpg' },
+  { id: 1, name: 'Danish Khan', role: 'Core Team', image: '/members/1.jpg' },
+  { id: 3, name: 'Mohammad Soheb', role: 'Research', image: '/members/3.jpg' },
+  { id: 4, name: 'Faizan Deshmukh', role: 'Strategy', image: '/members/4.jpg' },
+  { id: 5, name: 'Rohit Hatkar', role: 'Design', image: '/members/5.jpg' }
 ]
 
 function Home() {
