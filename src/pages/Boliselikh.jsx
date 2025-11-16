@@ -13,12 +13,17 @@ import ErrorMessage from '../components/ErrorMessage'
 import Footer from '../components/Footer'
 import NotSupported from '../components/NotSupported'
 import DarkVeil from '../components/DarkVeil'
+import GrammarDetector from '../components/GrammarDetector'
+import Rephraser from '../components/Rephraser'
 import { getWordCount, getCharCount } from '../utils/formatters'
 
 function Boliselikh() {
   const [fontSize, setFontSize] = useState('base')
   const [wordCount, setWordCount] = useState(0)
   const [charCount, setCharCount] = useState(0)
+  const [showGrammarDetector, setShowGrammarDetector] = useState(false)
+  const [showRephraser, setShowRephraser] = useState(false)
+  const [currentTranscript, setCurrentTranscript] = useState('')
 
   const {
     transcript,
@@ -37,6 +42,7 @@ function Boliselikh() {
   // Update word and character counts
   useEffect(() => {
     const fullText = transcript + interimTranscript
+    setCurrentTranscript(fullText)
     setCharCount(getCharCount(fullText))
     setWordCount(getWordCount(fullText))
   }, [transcript, interimTranscript])
@@ -51,6 +57,16 @@ function Boliselikh() {
 
   const handleClear = () => {
     clearTranscript()
+  }
+
+  const handleApplyGrammarFix = (correctedText) => {
+    // This would require modifying the transcript through the hook
+    // For now, we'll update the display and the user can copy the corrected version
+    setCurrentTranscript(correctedText)
+  }
+
+  const handleApplyRephrase = (rephrasedText) => {
+    setCurrentTranscript(rephrasedText)
   }
 
   const changeFontSize = (size) => {
@@ -135,17 +151,37 @@ function Boliselikh() {
 
               {/* Utility Buttons */}
               <UtilityButtons
-                transcript={transcript}
+                transcript={currentTranscript || transcript}
                 wordCount={wordCount}
                 charCount={charCount}
                 language={language}
                 speakingTime={speakingTime}
                 onClear={handleClear}
+                onGrammarCheck={() => setShowGrammarDetector(true)}
+                onRephrase={() => setShowRephraser(true)}
               />
             </div>
           </div>
         </div>
       </div>
+
+      {/* Grammar Detector Modal */}
+      {showGrammarDetector && (
+        <GrammarDetector
+          transcript={currentTranscript || transcript}
+          onClose={() => setShowGrammarDetector(false)}
+          onApplyFix={handleApplyGrammarFix}
+        />
+      )}
+
+      {/* Rephraser Modal */}
+      {showRephraser && (
+        <Rephraser
+          transcript={currentTranscript || transcript}
+          onClose={() => setShowRephraser(false)}
+          onApplyRephrase={handleApplyRephrase}
+        />
+      )}
 
       {/* Footer - Full Width */}
       <Footer />

@@ -1,7 +1,16 @@
 import { useState } from 'react'
 import { copyToClipboard, downloadAsText, downloadAsJSON } from '../utils/fileOperations'
 
-function UtilityButtons({ transcript, wordCount, charCount, language, speakingTime, onClear }) {
+function UtilityButtons({
+  transcript,
+  wordCount,
+  charCount,
+  language,
+  speakingTime,
+  onClear,
+  onGrammarCheck,
+  onRephrase
+}) {
   const [isCopied, setIsCopied] = useState(false)
 
   const handleCopy = async () => {
@@ -29,7 +38,7 @@ function UtilityButtons({ transcript, wordCount, charCount, language, speakingTi
           Copied to clipboard!
         </div>
       )}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
         <button
           onClick={handleCopy}
           disabled={!transcript}
@@ -50,6 +59,20 @@ function UtilityButtons({ transcript, wordCount, charCount, language, speakingTi
           className="bg-transparent border-2 border-white text-white font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center disabled:border-white/30 disabled:text-white/40 disabled:cursor-not-allowed"
         >
           JSON
+        </button>
+        <button
+          onClick={onGrammarCheck}
+          disabled={!transcript}
+          className="bg-transparent border-2 border-blue-400 text-blue-400 font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center disabled:border-blue-400/30 disabled:text-blue-400/40 disabled:cursor-not-allowed hover:bg-blue-400/10"
+        >
+          Grammar
+        </button>
+        <button
+          onClick={onRephrase}
+          disabled={!transcript}
+          className="bg-transparent border-2 border-purple-400 text-purple-400 font-semibold py-3 px-4 rounded-full transition-all duration-200 text-sm flex items-center justify-center disabled:border-purple-400/30 disabled:text-purple-400/40 disabled:cursor-not-allowed hover:bg-purple-400/10"
+        >
+          Rephrase
         </button>
         <button
           onClick={onClear}
