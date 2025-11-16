@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { copyToClipboard, downloadAsText, downloadAsJSON } from '../utils/fileOperations'
 
-function AIToolsButtons({ 
-  transcript, 
+function AIToolsButtons({
+  transcript,
   wordCount = 0,
   charCount = 0,
   language = 'en-US',
   speakingTime = 0,
-  onGrammarCheck, 
+  onGrammarCheck,
   onRephrase,
   onClear
 }) {
