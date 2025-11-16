@@ -11,9 +11,9 @@ function FontSizeSelector({ fontSize, onFontSizeChange }) {
           <button
             key={size}
             onClick={() => onFontSizeChange(size)}
-            className={`w-12 h-12 rounded-full font-bold text-sm transition-all duration-200 flex items-center justify-center ${fontSize === size
-              ? 'bg-white text-black shadow-lg'
-              : 'bg-transparent border-2 border-white text-white hover:border-white/80'
+            className={`w-12 h-12 rounded-xl font-bold text-sm transition-all duration-200 flex items-center justify-center backdrop-blur-lg ${fontSize === size
+                ? 'bg-white/20 border border-white/40 text-white shadow-lg'
+                : 'bg-white/10 border border-white/20 text-white hover:bg-white/15 hover:border-white/30'
               }`}
           >
             {FONT_SIZE_LABELS[size]}

@@ -36,7 +36,7 @@ const FooterColumn = ({ title, links }) => (
         <li key={index}>
           <a
             href={link.href}
-            className="text-white/60 hover:text-white text-sm transition-colors duration-200"
+            className="text-white/70 hover:text-white/90 text-sm transition-colors duration-200"
           >
             {link.label}
           </a>
@@ -50,7 +50,7 @@ function Footer({ hideOnMobile = false }) {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className={`relative z-20 bg-black/40 backdrop-blur-lg border-t border-white/10 py-12 px-4 mt-8 w-full ${hideOnMobile ? 'hidden md:block' : ''}`}>
+    <footer className={`relative z-20 bg-white/10 backdrop-blur-2xl border-t border-white/20 py-12 px-4 mt-8 w-full ${hideOnMobile ? 'hidden md:block' : ''}`}>
       <div className="max-w-6xl mx-auto">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
@@ -59,7 +59,7 @@ function Footer({ hideOnMobile = false }) {
             <h2 className="text-2xl font-bold text-white mb-2">
               {FOOTER_BRAND.emoji} {FOOTER_BRAND.name}
             </h2>
-            <p className="text-white/60 text-sm mb-4">
+            <p className="text-white/70 text-sm mb-4">
               {FOOTER_BRAND.description}
             </p>
             {/* Social Links */}
@@ -70,7 +70,7 @@ function Footer({ hideOnMobile = false }) {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white/60 hover:text-white transition-colors duration-200"
+                  className="text-white/70 hover:text-white/90 transition-colors duration-200"
                   aria-label={social.name}
                 >
                   <SocialIcon type={social.icon} />
@@ -94,7 +94,7 @@ function Footer({ hideOnMobile = false }) {
 
         {/* Bottom Section */}
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/60 text-sm">
+          <p className="text-white/70 text-sm">
             © {currentYear} {FOOTER_BRAND.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
@@ -102,7 +102,7 @@ function Footer({ hideOnMobile = false }) {
               <div key={index} className="flex items-center gap-6">
                 <a
                   href={link.href}
-                  className="text-white/60 hover:text-white text-sm transition-colors duration-200"
+                  className="text-white/70 hover:text-white/90 text-sm transition-colors duration-200"
                 >
                   {link.label}
                 </a>

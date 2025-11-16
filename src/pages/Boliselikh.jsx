@@ -105,7 +105,7 @@ function Boliselikh() {
           {/* Main Content Container */}
           <div className="mt-8 space-y-6">
             {/* Settings Panel - Glass */}
-            <div className="backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-2xl transition-all duration-300">
+            <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 shadow-2xl transition-all duration-300">
               <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
                 <div className="flex-1">
                   <LanguageSelector
@@ -124,7 +124,7 @@ function Boliselikh() {
             </div>
 
             {/* Main Editor Panel - Glass */}
-            <div className="backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl space-y-6">
+            <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 shadow-2xl space-y-6">
               {/* Inline Grammar Display with Analysis */}
               {useInlineAnalysis ? (
                 <InlineGrammarDisplay
@@ -145,7 +145,7 @@ function Boliselikh() {
               {error && <ErrorMessage error={error} />}
 
               {/* Stats Bar - Glass Inner */}
-              <div >
+              <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-4">
                 <StatsBar
                   wordCount={wordCount}
                   charCount={charCount}

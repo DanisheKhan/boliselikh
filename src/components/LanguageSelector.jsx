@@ -11,7 +11,7 @@ function LanguageSelector({ language, onLanguageChange, isListening }) {
           value={language}
           onChange={(e) => onLanguageChange(e.target.value)}
           disabled={isListening}
-          className="w-full px-4 py-3 bg-transparent border-2 border-white rounded-full focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 appearance-none pr-12"
+          className="w-full px-4 py-3 bg-white/10 backdrop-blur-lg border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 appearance-none pr-12"
           style={{
             colorScheme: 'dark',
           }}
