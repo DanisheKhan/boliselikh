@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import LanguageSelector from '../components/LanguageSelector'
 import FontSizeSelector from '../components/FontSizeSelector'
 import TranscriptDisplay from '../components/TranscriptDisplay'
+import InlineGrammarDisplay from '../components/InlineGrammarDisplay'
 import StatsBar from '../components/StatsBar'
 import PlayPauseButton from '../components/PlayPauseButton'
 import UtilityButtons from '../components/UtilityButtons'
@@ -24,6 +25,7 @@ function Boliselikh() {
   const [showGrammarDetector, setShowGrammarDetector] = useState(false)
   const [showRephraser, setShowRephraser] = useState(false)
   const [currentTranscript, setCurrentTranscript] = useState('')
+  const [useInlineAnalysis, setUseInlineAnalysis] = useState(true)
 
   const {
     transcript,
@@ -123,13 +125,20 @@ function Boliselikh() {
 
             {/* Main Editor Panel - Glass */}
             <div className="backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl space-y-6">
-              {/* Transcript Display */}
-              <TranscriptDisplay
-                transcript={transcript}
-                interimTranscript={interimTranscript}
-                isListening={isListening}
-                fontSize={fontSize}
-              />
+              {/* Inline Grammar Display with Analysis */}
+              {useInlineAnalysis ? (
+                <InlineGrammarDisplay
+                  text={currentTranscript || transcript + interimTranscript}
+                  onTextChange={(newText) => setCurrentTranscript(newText)}
+                />
+              ) : (
+                <TranscriptDisplay
+                  transcript={transcript}
+                  interimTranscript={interimTranscript}
+                  isListening={isListening}
+                  fontSize={fontSize}
+                />
+              )}
 
               {/* Error Message */}
               {error && <ErrorMessage error={error} />}
