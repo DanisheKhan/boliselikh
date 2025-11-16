@@ -151,7 +151,7 @@ function InlineGrammarDisplay({ text, onTextChange, fontSize = 'base' }) {
               // Clear grammar issues when user edits
               if (grammarIssues.length > 0) {
                 setGrammarIssues([])
-                setAnalysisComplete(false)
+                setSelectedIssueIndex(null)
               }
             }}
             className={`relative w-full min-h-48 max-h-64 p-4 bg-white/5 resize-none focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/40 overflow-y-auto font-mono text-${fontSize}`}
