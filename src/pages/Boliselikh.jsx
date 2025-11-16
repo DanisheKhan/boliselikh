@@ -9,7 +9,7 @@ import TranscriptDisplay from '../components/TranscriptDisplay'
 import InlineGrammarDisplay from '../components/InlineGrammarDisplay'
 import StatsBar from '../components/StatsBar'
 import PlayPauseButton from '../components/PlayPauseButton'
-import UtilityButtons from '../components/UtilityButtons'
+import AIToolsButtons from '../components/AIToolsButtons'
 import ErrorMessage from '../components/ErrorMessage'
 import Footer from '../components/Footer'
 import NotSupported from '../components/NotSupported'
@@ -159,16 +159,16 @@ function Boliselikh() {
                 onToggle={handlePlayPauseToggle}
               />
 
-              {/* Utility Buttons */}
-              <UtilityButtons
+              {/* AI Tools Buttons */}
+              <AIToolsButtons
                 transcript={currentTranscript || transcript}
                 wordCount={wordCount}
                 charCount={charCount}
                 language={language}
                 speakingTime={speakingTime}
-                onClear={handleClear}
                 onGrammarCheck={() => setShowGrammarDetector(true)}
                 onRephrase={() => setShowRephraser(true)}
+                onClear={handleClear}
               />
             </div>
           </div>
