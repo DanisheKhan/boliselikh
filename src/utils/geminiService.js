@@ -33,28 +33,32 @@ export const detectGrammarIssuesWithGemini = async (text) => {
 
     const prompt = `You are a professional grammar checker. Analyze the following text and return a JSON array of grammar issues.
 
+IMPORTANT: You MUST provide startChar and endChar for EVERY issue. These are critical for highlighting.
+
 For each issue found, include:
 - type: the type (e.g., "spelling", "grammar", "punctuation", "word_choice")
 - message: brief explanation
-- problematicText: the EXACT problematic words/text from the original
+- problematicText: the EXACT problematic words/text from the original (must match exactly)
 - suggestions: array with 1-3 suggested corrections
 - severity: either "high", "medium", or "low"
-- startChar: the exact character position (0-indexed) where the issue starts
-- endChar: the exact character position (0-indexed) where the issue ends
+- startChar: the EXACT 0-indexed character position where the issue starts (count from beginning)
+- endChar: the EXACT 0-indexed character position where the issue ends (exclusive, so endChar - startChar = word length)
 
-TEXT TO ANALYZE (marked with positions below):
-${text}
-${Array.from(text).map((_, i) => (i % 10 === 0 ? Math.floor(i / 10) % 10 : ' ')).join('')}
+TEXT TO ANALYZE:
+"${text}"
+
+Character position reference:
 ${Array.from(text).map((_, i) => i % 10).join('')}
 
 Return ONLY a valid JSON array. If no issues found, return [].
+
+Example for text "this is test":
+If "is" at positions 5-7 was wrong, you'd use: startChar: 5, endChar: 7
+If "test" at positions 8-12 was wrong, you'd use: startChar: 8, endChar: 12
+
 Example format: [{"type":"grammar","message":"Subject-verb agreement error: 'I' requires 'am', not 'are'.","problematicText":"are","suggestions":["am"],"severity":"high","startChar":15,"endChar":18}]
 
-IMPORTANT: 
-1. Always include the exact problematic text that appears in the original text
-2. Count character positions carefully starting from 0
-3. startChar is where the problematic text begins
-4. endChar is where the problematic text ends (exclusive)`
+CRITICAL: Always verify that text.substring(startChar, endChar) equals problematicText.`
 
     const result = await model.generateContent(prompt)
     const responseText = result.response.text().trim()

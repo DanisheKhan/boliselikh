@@ -1,87 +1,45 @@
 import { useState } from 'react'
-import { AlertCircle, RefreshCw, Copy, Check } from 'lucide-react'
 import { detectGrammarIssuesWithGemini, rephrasTextWithGemini } from '../utils/geminiService'
 
-function InlineGrammarDisplay({ text, onTextChange }) {
+function InlineGrammarDisplay({ text, onTextChange, fontSize = 'base' }) {
   const [grammarIssues, setGrammarIssues] = useState([])
-  const [rephraseOption, setRephraseOption] = useState(null)
-  const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [selectedIssueIndex, setSelectedIssueIndex] = useState(null)
-  const [showRephrasePanel, setShowRephrasePanel] = useState(false)
-  const [analysisComplete, setAnalysisComplete] = useState(false)
   const [error, setError] = useState(null)
 
-  const analyzeGrammar = async (textToAnalyze = null) => {
-    const textContent = textToAnalyze !== null ? textToAnalyze : text
-
-    if (!textContent.trim()) {
-      setError('Please enter some text to analyze')
-      return
-    }
-
-    setIsAnalyzing(true)
-    setAnalysisComplete(false)
-    setError(null)
-    try {
-      const issues = await detectGrammarIssuesWithGemini(textContent)
-      setGrammarIssues(issues || [])
-      setSelectedIssueIndex(issues && issues.length > 0 ? 0 : null)
-      setAnalysisComplete(true)
-    } catch (err) {
-      console.error('Error analyzing grammar:', err)
-      setError(err.message || 'Failed to analyze grammar. Please try again.')
-      setGrammarIssues([])
-    } finally {
-      setIsAnalyzing(false)
-    }
-  }
-
-  const getRephraseSuggestion = async (tone = 'formal') => {
-    if (!text.trim()) {
-      setError('Please enter some text to rephrase')
-      return
-    }
-
-    setIsAnalyzing(true)
-    setError(null)
-    try {
-      const rephrased = await rephrasTextWithGemini(text, tone)
-      if (!rephrased) {
-        throw new Error('No rephrase generated')
-      }
-      setRephraseOption({ original: text, rephrased, tone })
-      setShowRephrasePanel(true)
-    } catch (err) {
-      console.error('Error rephrasing:', err)
-      setError(err.message || 'Failed to rephrase text. Please try again.')
-    } finally {
-      setIsAnalyzing(false)
-    }
-  }
-
   const applySuggestion = (issue) => {
-    if (!issue.suggestions || issue.suggestions.length === 0) return
+    if (!issue.suggestions || issue.suggestions.length === 0) {
+      setError('No suggestion available for this issue')
+      return
+    }
 
     const suggestion = issue.suggestions[0]
+
+    // Validate position data
+    if (issue.position === undefined || issue.length === undefined) {
+      setError('Invalid position data for this issue')
+      return
+    }
+
+    // Log for debugging
+    console.log('Applying suggestion:', {
+      originalWord: text.substring(issue.position, issue.position + issue.length),
+      suggestion,
+      position: issue.position,
+      length: issue.length
+    })
+
     const before = text.substring(0, issue.position)
     const after = text.substring(issue.position + issue.length)
     const correctedText = before + suggestion + after
 
+    console.log('Corrected text:', correctedText)
+
     // Update the text in the parent
     onTextChange(correctedText)
 
-    // Auto-reanalyze with the corrected text
-    setTimeout(() => {
-      analyzeGrammar(correctedText)
-    }, 200)
-  }
-
-  const applyRephrase = () => {
-    if (rephraseOption) {
-      onTextChange(rephraseOption.rephrased)
-      setShowRephrasePanel(false)
-      setRephraseOption(null)
-    }
+    // Clear grammar issues after applying suggestion
+    setGrammarIssues([])
+    setSelectedIssueIndex(null)
   }
 
   return (
@@ -96,31 +54,13 @@ function InlineGrammarDisplay({ text, onTextChange }) {
       {/* Main Display Box with Inline Highlights */}
       <div className="relative">
         <div className="flex justify-between items-center mb-3">
-          <label className="text-sm font-semibold text-white/80">Transcript with Analysis</label>
-          <div className="flex gap-2">
-            <button
-              onClick={() => analyzeGrammar()}
-              disabled={isAnalyzing}
-              className="flex items-center gap-1 px-3 py-1 bg-blue-600/20 hover:bg-blue-600/40 border border-blue-400/50 text-blue-300 rounded-lg text-xs font-medium transition-colors disabled:opacity-50"
-            >
-              <AlertCircle className="w-3 h-3" />
-              {isAnalyzing ? 'Analyzing...' : 'Analyze'}
-            </button>
-            <button
-              onClick={() => getRephraseSuggestion('formal')}
-              disabled={isAnalyzing}
-              className="flex items-center gap-1 px-3 py-1 bg-purple-600/20 hover:bg-purple-600/40 border border-purple-400/50 text-purple-300 rounded-lg text-xs font-medium transition-colors disabled:opacity-50"
-            >
-              <RefreshCw className="w-3 h-3" />
-              {isAnalyzing ? 'Rephrasing...' : 'Rephrase'}
-            </button>
-          </div>
+          <label className="text-sm font-semibold text-white/80">Transcript</label>
         </div>
 
         {/* Text Display with Inline Highlights - Now Editable */}
         <div className="relative bg-white/5 border border-white/10 rounded-xl overflow-hidden group">
           {/* Overlay for highlights - clickable */}
-          <div className="absolute inset-0 p-4 text-white/90 leading-relaxed whitespace-pre-wrap pointer-events-auto overflow-y-auto max-h-64">
+          <div className={`absolute inset-0 p-4 text-white/90 leading-relaxed whitespace-pre-wrap pointer-events-auto overflow-y-auto max-h-64 text-${fontSize}`}>
             {text ? (
               <div
                 className="cursor-text"
@@ -214,7 +154,7 @@ function InlineGrammarDisplay({ text, onTextChange }) {
                 setAnalysisComplete(false)
               }
             }}
-            className="relative w-full min-h-48 max-h-64 p-4 bg-white/5 resize-none focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/40 overflow-y-auto font-mono"
+            className={`relative w-full min-h-48 max-h-64 p-4 bg-white/5 resize-none focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/40 overflow-y-auto font-mono text-${fontSize}`}
             placeholder="Your text will appear here..."
           />
         </div>
@@ -279,46 +219,6 @@ function InlineGrammarDisplay({ text, onTextChange }) {
         </div>
       )}
 
-      {/* Rephrase Panel */}
-      {showRephrasePanel && rephraseOption && (
-        <div className="bg-purple-500/10 border border-purple-400/30 rounded-xl p-4 space-y-3">
-          <div className="flex items-start justify-between mb-2">
-            <h4 className="font-semibold text-purple-200">Rephrase Suggestion</h4>
-            <button
-              onClick={() => setShowRephrasePanel(false)}
-              className="text-white/40 hover:text-white/60"
-            >
-              ✕
-            </button>
-          </div>
-
-          <div className="space-y-2">
-            <p className="text-xs text-white/50">Tone: <span className="capitalize font-semibold text-white/70">{rephraseOption.tone}</span></p>
-            <div className="bg-black/30 rounded p-3 text-white/80 text-sm">
-              {rephraseOption.rephrased}
-            </div>
-          </div>
-
-          <div className="flex gap-2">
-            <button
-              onClick={applyRephrase}
-              className="flex-1 bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-            >
-              Apply Rephrase
-            </button>
-            <button
-              onClick={async () => {
-                const newTone = rephraseOption.tone === 'formal' ? 'casual' : 'formal'
-                await getRephraseSuggestion(newTone)
-              }}
-              className="flex-1 bg-purple-600/50 hover:bg-purple-600/70 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-            >
-              Try Another Tone
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* Navigation */}
       {grammarIssues.length > 0 && (
         <div className="flex gap-2 text-xs text-white/60">
@@ -329,28 +229,6 @@ function InlineGrammarDisplay({ text, onTextChange }) {
             className="hover:text-white/80 transition-colors"
           >
             Clear highlights
-          </button>
-        </div>
-      )}
-
-      {/* Success Panel - Shows when analysis is complete and no errors remain */}
-      {analysisComplete && grammarIssues.length === 0 && (
-        <div className="bg-green-500/10 border border-green-400/50 rounded-xl p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Check className="w-5 h-5 text-green-400" />
-            <div>
-              <p className="font-semibold text-green-300">Perfect! No grammar issues found</p>
-              <p className="text-xs text-green-200/70">Your text is ready to use</p>
-            </div>
-          </div>
-          <button
-            onClick={() => {
-              setAnalysisComplete(false)
-              setGrammarIssues([])
-            }}
-            className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
-          >
-            Okay
           </button>
         </div>
       )}

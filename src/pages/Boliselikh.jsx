@@ -130,6 +130,7 @@ function Boliselikh() {
                 <InlineGrammarDisplay
                   text={currentTranscript || transcript + interimTranscript}
                   onTextChange={(newText) => setCurrentTranscript(newText)}
+                  fontSize={fontSize}
                 />
               ) : (
                 <TranscriptDisplay
