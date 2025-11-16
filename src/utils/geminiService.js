@@ -31,32 +31,63 @@ export const detectGrammarIssuesWithGemini = async (text) => {
     // Use gemini-2.0-flash which is the latest stable model
     const model = ai.getGenerativeModel({ model: 'gemini-2.0-flash' })
 
-    const prompt = `Analyze the following text for grammar issues. Return a JSON array of issues found. Each issue should have:
-- type: the type of grammar issue
-- message: a clear explanation
-- position: character position in text (approximate)
-- length: length of the problematic text
-- suggestions: array of suggested corrections
-- severity: 'high', 'medium', or 'low'
-- original: the original problematic text
+    const prompt = `You are a professional grammar checker. Analyze the following text and return a JSON array of grammar issues.
 
-Text to analyze:
-"${text}"
+For each issue found, include:
+- type: the type (e.g., "spelling", "grammar", "punctuation", "word_choice")
+- message: brief explanation
+- problematicText: the EXACT problematic words/text from the original
+- suggestions: array with 1-3 suggested corrections
+- severity: either "high", "medium", or "low"
 
-Return ONLY valid JSON array, no markdown or extra text. If no issues, return [].`
+TEXT TO ANALYZE:
+${text}
+
+Return ONLY a valid JSON array. If no issues found, return [].
+Example format: [{"type":"grammar","message":"Subject-verb agreement error: 'I' requires 'am', not 'are'.","problematicText":"are","suggestions":["am"],"severity":"high"}]
+
+IMPORTANT: Always include the exact problematic text that appears in the original text. Match it exactly.`
 
     const result = await model.generateContent(prompt)
-    const responseText = result.response.text()
+    const responseText = result.response.text().trim()
 
-    // Extract JSON from response
-    const jsonMatch = responseText.match(/\[[\s\S]*\]/)
-    if (!jsonMatch) {
-      console.error('Could not parse Gemini response:', responseText)
-      return []
+    // Extract JSON from response - handle various formats
+    let jsonStr = responseText
+
+    // Remove markdown code blocks if present
+    if (responseText.includes('```json')) {
+      jsonStr = responseText.replace(/```json\n?/g, '').replace(/```/g, '').trim()
+    } else if (responseText.includes('```')) {
+      jsonStr = responseText.replace(/```\n?/g, '').trim()
     }
 
-    const issues = JSON.parse(jsonMatch[0])
-    return Array.isArray(issues) ? issues : []
+    // Parse JSON
+    let issues = JSON.parse(jsonStr)
+    if (!Array.isArray(issues)) {
+      issues = []
+    }
+
+    // Convert problematicText to position and length with better position detection
+    let lastFoundPosition = 0
+    issues = issues.map((issue, idx) => {
+      if (issue.problematicText) {
+        // Search for the problematic text starting from after the last found issue
+        let position = text.indexOf(issue.problematicText, lastFoundPosition)
+
+        if (position !== -1) {
+          lastFoundPosition = position + issue.problematicText.length
+          return {
+            ...issue,
+            position,
+            length: issue.problematicText.length,
+            original: issue.problematicText
+          }
+        }
+      }
+      return issue
+    }).filter(issue => issue.position !== undefined && issue.position !== -1)
+
+    return issues
   } catch (error) {
     console.error('Error detecting grammar with Gemini:', error)
     throw error
@@ -78,19 +109,29 @@ export const rephrasTextWithGemini = async (text, tone) => {
     const model = ai.getGenerativeModel({ model: 'gemini-2.0-flash' })
 
     const toneDescriptions = {
-      formal: 'professional and formal tone suitable for business communication',
-      casual: 'relaxed and informal tone suitable for friendly conversation',
-      concise: 'shortened and direct tone, removing unnecessary words',
-      simple: 'easy-to-understand tone using simpler vocabulary'
+      formal: 'professional, business-appropriate, and formal',
+      casual: 'friendly, relaxed, and conversational',
+      concise: 'short, direct, and removes unnecessary words',
+      simple: 'easy to understand with simple vocabulary'
     }
 
-    const prompt = `Rephrase the following text in a ${toneDescriptions[tone]} manner. Return ONLY the rephrased text, nothing else.
+    const prompt = `You must rephrase the following text to be ${toneDescriptions[tone]}. 
 
-Text to rephrase:
-"${text}"`
+Original text: "${text}"
+
+Rules:
+- Keep the same meaning and information
+- Change only the style, tone, and word choice
+- Do not add or remove information
+- Return ONLY the rephrased text with no quotes, no explanation, no markdown
+
+Rephrased text:`
 
     const result = await model.generateContent(prompt)
-    return result.response.text().trim()
+    const rephrased = result.response.text().trim()
+
+    // Clean up any quotes or extra formatting
+    return rephrased.replace(/^["']|["']$/g, '').trim()
   } catch (error) {
     console.error(`Error rephrasing text with tone '${tone}':`, error)
     throw error
