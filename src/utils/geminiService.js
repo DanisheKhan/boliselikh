@@ -39,14 +39,22 @@ For each issue found, include:
 - problematicText: the EXACT problematic words/text from the original
 - suggestions: array with 1-3 suggested corrections
 - severity: either "high", "medium", or "low"
+- startChar: the exact character position (0-indexed) where the issue starts
+- endChar: the exact character position (0-indexed) where the issue ends
 
-TEXT TO ANALYZE:
+TEXT TO ANALYZE (marked with positions below):
 ${text}
+${Array.from(text).map((_, i) => (i % 10 === 0 ? Math.floor(i / 10) % 10 : ' ')).join('')}
+${Array.from(text).map((_, i) => i % 10).join('')}
 
 Return ONLY a valid JSON array. If no issues found, return [].
-Example format: [{"type":"grammar","message":"Subject-verb agreement error: 'I' requires 'am', not 'are'.","problematicText":"are","suggestions":["am"],"severity":"high"}]
+Example format: [{"type":"grammar","message":"Subject-verb agreement error: 'I' requires 'am', not 'are'.","problematicText":"are","suggestions":["am"],"severity":"high","startChar":15,"endChar":18}]
 
-IMPORTANT: Always include the exact problematic text that appears in the original text. Match it exactly.`
+IMPORTANT: 
+1. Always include the exact problematic text that appears in the original text
+2. Count character positions carefully starting from 0
+3. startChar is where the problematic text begins
+4. endChar is where the problematic text ends (exclusive)`
 
     const result = await model.generateContent(prompt)
     const responseText = result.response.text().trim()
@@ -67,15 +75,22 @@ IMPORTANT: Always include the exact problematic text that appears in the origina
       issues = []
     }
 
-    // Convert problematicText to position and length with better position detection
-    let lastFoundPosition = 0
-    issues = issues.map((issue, idx) => {
-      if (issue.problematicText) {
-        // Search for the problematic text starting from after the last found issue
-        let position = text.indexOf(issue.problematicText, lastFoundPosition)
+    // Convert to position and length using Gemini's provided positions
+    issues = issues.map((issue) => {
+      // Prefer Gemini's position data if available
+      if (issue.startChar !== undefined && issue.endChar !== undefined) {
+        return {
+          ...issue,
+          position: issue.startChar,
+          length: issue.endChar - issue.startChar,
+          original: issue.problematicText
+        }
+      }
 
+      // Fallback: search for the text
+      if (issue.problematicText) {
+        const position = text.indexOf(issue.problematicText)
         if (position !== -1) {
-          lastFoundPosition = position + issue.problematicText.length
           return {
             ...issue,
             position,

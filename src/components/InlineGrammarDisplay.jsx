@@ -14,10 +14,7 @@ function InlineGrammarDisplay({ text, onTextChange }) {
   const analyzeGrammar = async (textToAnalyze = null) => {
     const textContent = textToAnalyze !== null ? textToAnalyze : text
 
-    console.log('Analyze button clicked. Text to analyze:', textContent)
-
     if (!textContent.trim()) {
-      console.warn('No text to analyze')
       setError('Please enter some text to analyze')
       return
     }
@@ -26,9 +23,7 @@ function InlineGrammarDisplay({ text, onTextChange }) {
     setAnalysisComplete(false)
     setError(null)
     try {
-      console.log('Calling detectGrammarIssuesWithGemini...')
       const issues = await detectGrammarIssuesWithGemini(textContent)
-      console.log('Issues received:', issues)
       setGrammarIssues(issues || [])
       setSelectedIssueIndex(issues && issues.length > 0 ? 0 : null)
       setAnalysisComplete(true)
