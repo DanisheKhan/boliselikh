@@ -64,7 +64,7 @@ function GrammarDetector({ transcript, onClose, onApplyFix }) {
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-lg z-50 flex items-center justify-center p-4">
       <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl w-full max-w-3xl max-h-[85vh] overflow-hidden flex flex-col">
-        
+
         {/* Header - Glass Theme */}
         <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 px-8 py-6">
           <div className="flex items-center justify-between">
