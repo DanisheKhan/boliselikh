@@ -88,66 +88,94 @@ function InlineGrammarDisplay({ text, onTextChange }) {
           </div>
         </div>
 
-        {/* Text Display with Inline Highlights */}
-        <div className="bg-white/5 border border-white/10 rounded-xl p-4 min-h-48 max-h-64 overflow-y-auto">
-          {text ? (
-            <div className="text-white/90 leading-relaxed whitespace-pre-wrap">
-              {grammarIssues.length === 0 ? (
-                <p>{text}</p>
-              ) : (
-                (() => {
-                  let lastIndex = 0
-                  const elements = []
+        {/* Text Display with Inline Highlights - Now Editable */}
+        <div className="relative bg-white/5 border border-white/10 rounded-xl overflow-hidden group">
+          {/* Overlay for highlights - clickable */}
+          <div className="absolute inset-0 p-4 text-white/90 leading-relaxed whitespace-pre-wrap pointer-events-auto overflow-y-auto max-h-64">
+            {text ? (
+              <div
+                className="cursor-text"
+                onClick={(e) => {
+                  // Pass click through to textarea
+                  const textarea = e.currentTarget.parentElement?.nextElementSibling
+                  textarea?.focus()
+                }}
+              >
+                {grammarIssues.length === 0 ? (
+                  <span className="text-transparent select-none">{text}</span>
+                ) : (
+                  (() => {
+                    let lastIndex = 0
+                    const elements = []
 
-                  grammarIssues
-                    .sort((a, b) => a.position - b.position)
-                    .forEach((issue, idx) => {
-                      // Add text before the issue
-                      if (issue.position > lastIndex) {
+                    grammarIssues
+                      .sort((a, b) => a.position - b.position)
+                      .forEach((issue, idx) => {
+                        // Add text before the issue
+                        if (issue.position > lastIndex) {
+                          elements.push(
+                            <span key={`text-${idx}`} className="text-transparent select-none">
+                              {text.substring(lastIndex, issue.position)}
+                            </span>
+                          )
+                        }
+
+                        // Add highlighted problematic text
+                        const severityColor = {
+                          high: 'bg-red-500/30 border-b-2 border-red-400 hover:bg-red-500/50',
+                          medium: 'bg-yellow-500/30 border-b-2 border-yellow-400 hover:bg-yellow-500/50',
+                          low: 'bg-blue-500/30 border-b-2 border-blue-400 hover:bg-blue-500/50'
+                        }
+
                         elements.push(
-                          <span key={`text-${idx}`}>
-                            {text.substring(lastIndex, issue.position)}
+                          <span
+                            key={`issue-${idx}`}
+                            className={`${severityColor[issue.severity]} transition-all cursor-pointer select-none`}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setSelectedIssueIndex(idx)
+                            }}
+                            title={issue.message}
+                          >
+                            {text.substring(issue.position, issue.position + issue.length)}
                           </span>
                         )
-                      }
 
-                      // Add highlighted problematic text
-                      const severityColor = {
-                        high: 'bg-red-500/30 border-b-2 border-red-400 cursor-pointer hover:bg-red-500/50',
-                        medium: 'bg-yellow-500/30 border-b-2 border-yellow-400 cursor-pointer hover:bg-yellow-500/50',
-                        low: 'bg-blue-500/30 border-b-2 border-blue-400 cursor-pointer hover:bg-blue-500/50'
-                      }
+                        lastIndex = issue.position + issue.length
+                      })
 
+                    // Add remaining text
+                    if (lastIndex < text.length) {
                       elements.push(
-                        <span
-                          key={`issue-${idx}`}
-                          className={`${severityColor[issue.severity]} transition-all`}
-                          onClick={() => setSelectedIssueIndex(idx)}
-                          title={issue.message}
-                        >
-                          {text.substring(issue.position, issue.position + issue.length)}
+                        <span key="text-end" className="text-transparent select-none">
+                          {text.substring(lastIndex)}
                         </span>
                       )
+                    }
 
-                      lastIndex = issue.position + issue.length
-                    })
+                    return elements
+                  })()
+                )}
+              </div>
+            ) : (
+              <span className="text-transparent select-none">placeholder</span>
+            )}
+          </div>
 
-                  // Add remaining text
-                  if (lastIndex < text.length) {
-                    elements.push(
-                      <span key="text-end">
-                        {text.substring(lastIndex)}
-                      </span>
-                    )
-                  }
-
-                  return elements
-                })()
-              )}
-            </div>
-          ) : (
-            <p className="text-white/40 italic">Your text will appear here...</p>
-          )}
+          {/* Editable textarea */}
+          <textarea
+            value={text}
+            onChange={(e) => {
+              onTextChange(e.target.value)
+              // Clear grammar issues when user edits
+              if (grammarIssues.length > 0) {
+                setGrammarIssues([])
+                setAnalysisComplete(false)
+              }
+            }}
+            className="relative w-full min-h-48 max-h-64 p-4 bg-white/5 resize-none focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/40 overflow-y-auto font-mono"
+            placeholder="Your text will appear here..."
+          />
         </div>
       </div>
 
